@@ -8,6 +8,7 @@ export default class Counter extends Component {
     this.state = {
       count: 0,
       countingMode: true,
+      
     };
   }
   incrementCount = () => {
@@ -55,3 +56,6 @@ Counter.propTypes = {
   step: PropTypes.number,
 }
 
+Counter.defaultProps = {
+  step: 1
+}
