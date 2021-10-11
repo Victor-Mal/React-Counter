@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Button from "../Button/Button";
+import "./index.sass";
 
 export default class Counter extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export default class Counter extends Component {
     this.setState({
       countingMode: false,
     });
+
   };
 
   changeCounter = () => {
@@ -29,7 +31,7 @@ export default class Counter extends Component {
       ? this.setState({ count: increment })
       : this.setState({ count: decrement });
   };
-
+  
   tick = () => {
     this.setState({ seconds: 30 });
     this.autoInterval = setInterval(() => {
@@ -47,23 +49,21 @@ export default class Counter extends Component {
   componentWillUnmount() {
     clearInterval(this.autoInterval);
   }
-
+  
   render() {
-    const autoCounter = (
-      <div>
-        <div>Seconds: {this.state.seconds} </div>
-      </div>
-    );
     return (
       <div>
         <div>
-          <h2>Count: {this.state.count}</h2>
-          <Button title={"Отнять"} action={this.decrementCount} />
-          <Button title={"Добавить"} action={this.incrementCount} />
+          <h2>Count: {this.state.count} Seconds: {this.state.seconds}</h2>
+          <div></div>
+          <div>
+            <Button style={{backgroundColor: this.state.countingMode ? 'white' : 'mediumvioletred'}} title={"Отнимать"} action={this.decrementCount} />
+            <Button style={{backgroundColor: this.state.countingMode ? 'green' : 'white'}} title={"Добавлять"} action={this.incrementCount} />
+          </div>
           <Button title={"Изменить счет"} action={this.changeCounter} />
           <Button title={"Автокликер"} action={this.tick} />
-          <div>{autoCounter}</div>
         </div>
+        
       </div>
     );
   }

@@ -31,14 +31,14 @@ class CounterSettings extends Component {
       </div>
     );
     return (
-      <div>
+      <div className='clicker'>
         <div>
-          <h3>Step:</h3>
-          {jsxCounter}
           <Counter
             step={this.state.step}
             actionsPerSecond={this.state.actionsPerSecond}
           />
+          <h3>Step:</h3>
+          {jsxCounter}
         </div>
         <div>
           <h3>ActionsPerSecond</h3>
