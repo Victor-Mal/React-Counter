@@ -8,7 +8,6 @@ export default class Counter extends Component {
     this.state = {
       count: 0,
       countingMode: true,
-      actionsPerSecond: 1,
       seconds: 30,
     };
   }
@@ -30,18 +29,14 @@ export default class Counter extends Component {
       ? this.setState({ count: increment })
       : this.setState({ count: decrement });
   };
-  handleActionsPerSecondChange = (event) => {
-    const { target } = event;
-    this.setState({ actionsPerSecond: Number(target.value) });
-  };
 
   tick = () => {
-    this.setState ({seconds:30})
+    this.setState({ seconds: 30 });
     this.autoInterval = setInterval(() => {
       if (this.state.seconds > 0) {
         this.changeCounter();
       }
-    }, 1000 / this.state.actionsPerSecond);
+    }, 1000 / this.props.actionsPerSecond);
     this.timeInterval = setInterval(() => {
       if (this.state.seconds > 0) {
         this.setState((prevSeconds) => ({ seconds: prevSeconds.seconds - 1 }));
@@ -56,16 +51,6 @@ export default class Counter extends Component {
   render() {
     const autoCounter = (
       <div>
-        <div>
-          ActionsPerSecond
-          <input
-            type="number"
-            name="actionsPerSecond"
-            value={this.state.actionsPerSecond}
-            onChange={this.handleActionsPerSecondChange}
-          />
-        </div>
-
         <div>Seconds: {this.state.seconds} </div>
       </div>
     );
