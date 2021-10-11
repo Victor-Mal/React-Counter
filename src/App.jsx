@@ -25,7 +25,7 @@ class App extends Component {
     );
     return (
       <div>
-        {jsxCounter}
+        <h3>Step:</h3>{jsxCounter}
         <Counter step={this.state.step} />
       </div>
     );

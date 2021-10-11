@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import Button from "../Button/Button";
 
 export default class Counter extends Component {
@@ -8,7 +8,8 @@ export default class Counter extends Component {
     this.state = {
       count: 0,
       countingMode: true,
-      
+      actionsPerSecond: 1,
+      seconds: 30,
     };
   }
   incrementCount = () => {
@@ -29,23 +30,54 @@ export default class Counter extends Component {
       ? this.setState({ count: increment })
       : this.setState({ count: decrement });
   };
+  handleActionsPerSecondChange = (event) => {
+    const { target } = event;
+    this.setState({ actionsPerSecond: Number(target.value) });
+  };
+
+  tick = () => {
+    this.setState ({seconds:30})
+    this.autoInterval = setInterval(() => {
+      if (this.state.seconds > 0) {
+        this.changeCounter();
+      }
+    }, 1000 / this.state.actionsPerSecond);
+    this.timeInterval = setInterval(() => {
+      if (this.state.seconds > 0) {
+        this.setState((prevSeconds) => ({ seconds: prevSeconds.seconds - 1 }));
+      }
+    }, 1000);
+  };
+
+  componentWillUnmount() {
+    clearInterval(this.autoInterval);
+  }
 
   render() {
-    
-    return (
-       
+    const autoCounter = (
       <div>
         <div>
-          
-          <h3>Step: {this.props.step}</h3>
-         
+          ActionsPerSecond
+          <input
+            type="number"
+            name="actionsPerSecond"
+            value={this.state.actionsPerSecond}
+            onChange={this.handleActionsPerSecondChange}
+          />
         </div>
 
+        <div>Seconds: {this.state.seconds} </div>
+      </div>
+    );
+    return (
+      <div>
         <div>
           <h2>Count: {this.state.count}</h2>
           <Button title={"Отнять"} action={this.decrementCount} />
           <Button title={"Добавить"} action={this.incrementCount} />
           <Button title={"Изменить счет"} action={this.changeCounter} />
+          <Button title={"Автокликер"} action={this.tick} />
+          <div>{autoCounter}</div>
         </div>
       </div>
     );
@@ -54,8 +86,8 @@ export default class Counter extends Component {
 
 Counter.propTypes = {
   step: PropTypes.number,
-}
+};
 
 Counter.defaultProps = {
-  step: 1
-}
+  step: 1,
+};
